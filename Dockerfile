@@ -29,6 +29,9 @@ RUN apk add --no-cache ca-certificates tzdata
 
 WORKDIR /app
 
+ENV http_proxy=http://192.168.2.133:4783
+ENV https_proxy=http://192.168.2.133:4783
+
 COPY --from=builder /src/server/bin/server .
 COPY --from=builder /src/server/bin/multica .
 COPY --from=builder /src/server/bin/migrate .
