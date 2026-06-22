@@ -1,6 +1,11 @@
 # --- Build stage ---
 FROM golang:1.26-alpine AS builder
 
+ENV http_proxy=http://192.168.2.133:4783
+ENV https_proxy=http://192.168.2.133:4783
+ENV GOPROXY=https://goproxy.cn,direct
+ENV GOSUMDB=sum.golang.google.cn
+
 RUN apk add --no-cache git
 
 WORKDIR /src
