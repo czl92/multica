@@ -1,11 +1,6 @@
 # --- Build stage ---
 FROM golang:1.26-alpine AS builder
 
-ENV http_proxy=http://192.168.2.133:4783
-ENV https_proxy=http://192.168.2.133:4783
-ENV GOPROXY=https://goproxy.cn,direct
-ENV GOSUMDB=sum.golang.google.cn
-
 RUN apk add --no-cache git
 
 WORKDIR /src
@@ -33,9 +28,6 @@ FROM alpine:3.21
 RUN apk add --no-cache ca-certificates tzdata
 
 WORKDIR /app
-
-ENV http_proxy=http://192.168.2.133:4783
-ENV https_proxy=http://192.168.2.133:4783
 
 COPY --from=builder /src/server/bin/server .
 COPY --from=builder /src/server/bin/multica .
