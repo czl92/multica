@@ -285,7 +285,9 @@ func (c *WSConnector) handleCallback(ctx context.Context, inst db.WechatInstalla
 		Body:           cb.Text.Content,
 		MsgType:        cb.MsgType,
 		CallbackReqID:  callbackReqID,
-		AddressedToBot: chatType == ChatTypeSingle,
+		// WeCom only delivers aibot_msg_callback when the bot is addressed:
+		// 1:1 chats always count; group chats only fire when the bot is @-mentioned.
+		AddressedToBot: true,
 	}
 
 	result, err := emit(ctx, msg)

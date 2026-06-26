@@ -158,17 +158,7 @@ type Handler struct {
 	// UI consults IsConfigured() to decide whether to surface install
 	// entry points.
 	LarkAPIClient lark.APIClient
-	// LarkHub owns the per-installation supervisor goroutines that
-	// hold the §4.4 WS lease and run the EventConnector. Nil only
-	// when the master at-rest key (MULTICA_LARK_SECRET_KEY) is unset.
-	// The router constructs the Hub but does NOT call Run on it; the
-	// process owner (main.go) starts it under a long-running context
-	// and joins via WaitWithTimeout (bounded wait, fenced by
-	// ShutdownTimeout) during graceful shutdown so the lease renewer
-	// can yield cleanly when the DB is healthy without blocking
-	// process exit indefinitely if the pool is frozen — at worst the
-	// next replica waits the full TTL.
-	LarkHub *lark.Hub
+
 
 	WechatInstallations *wechat.InstallationService
 	WechatHub           *wechat.Hub
